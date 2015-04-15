@@ -101,6 +101,12 @@ class Atendimento(models.Model):
                               help_text=u"Informar o valor (usar 'ponto' como separador decimal) total do atendimento/procedimento realizado.",
                               validators=[MinValueValidator(0)])
 
+    forma_pagamento = models.ForeignKey(FormaPagamento,
+                                        verbose_name=u"Forma de Pagamento",
+                                        help_text=u"Indique a forma de pagamento do atendimento.",
+                                        null=True,
+                                        blank=True)
+
     recebido = models.BooleanField(verbose_name=u"Recebido",
                                    help_text=u"Marcar esta opção caso já tenha recebido o valor da consulta.",
                                    default=False)
