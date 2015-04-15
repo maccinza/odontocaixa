@@ -1,0 +1,1 @@
+web: gunicorn OdontoCaixa.wsgi --log-file -
