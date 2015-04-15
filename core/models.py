@@ -20,6 +20,13 @@ class FormaPagamento(models.Model):
                                                      u"forma de pagamento acarreta.",
                                            default=0)
 
+    def save(self, *args, **kwargs):
+        for field_name in ['nome']:
+            val = getattr(self, field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
+        super(FormaPagamento, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return self.nome
 
@@ -67,6 +74,13 @@ class Paciente(models.Model):
                                 blank=True,
                                 null=True)
 
+    def save(self, *args, **kwargs):
+        for field_name in ['nome', 'sobrenome']:
+            val = getattr(self, field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
+        super(Paciente, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return u" ".join([self.nome, self.sobrenome])
 
@@ -111,6 +125,13 @@ class Atendimento(models.Model):
                                    help_text=u"Marcar esta opção caso já tenha recebido o valor da consulta.",
                                    default=False)
 
+    def save(self, *args, **kwargs):
+        for field_name in ['descricao']:
+            val = getattr(self, field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
+        super(Atendimento, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return u"Atendimento (%s) - %s" % (self.data.strftime('%d/%m/%Y %H:%M:%S'),
                                            ','.join([u.nome for u in self.pacientes.all()]))
@@ -145,7 +166,18 @@ class Despesa(models.Model):
                               help_text=u"Indicar o valor (usar 'ponto' como separador decimal) da despesa efetuada.",
                               validators=[MinValueValidator(0)])
 
+    def save(self, *args, **kwargs):
+        for field_name in ['descricao']:
+            val = getattr(self, field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
+        super(Despesa, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return u"Despesa %s (%s) - Valor: %.2f" % (self.categoria,
                                                    self.data_hora.strftime('%d/%m/%Y %H:%M:%S'),
                                                    self.valor)
+
+    class Meta:
+        verbose_name = u"Despesa"
+        verbose_name_plural = u"Despesas"
