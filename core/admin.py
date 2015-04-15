@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 
-from core.models import FormaPagamento, Paciente, Atendimento
+from core.models import FormaPagamento, Paciente, Atendimento, Despesa
 
 class AtendimentoAdmin(admin.ModelAdmin):
     filter_horizontal = ['pacientes']
@@ -10,3 +10,4 @@ class AtendimentoAdmin(admin.ModelAdmin):
 admin.site.register(FormaPagamento)
 admin.site.register(Paciente)
 admin.site.register(Atendimento, AtendimentoAdmin)
+admin.site.register(Despesa)

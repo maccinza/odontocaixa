@@ -98,7 +98,7 @@ class Atendimento(models.Model):
                                  blank=True)
 
     valor = models.FloatField(verbose_name=u"Valor",
-                              help_text=u"Informar o valor total do atendimento/procedimento realizado.",
+                              help_text=u"Informar o valor (usar 'ponto' como separador decimal) total do atendimento/procedimento realizado.",
                               validators=[MinValueValidator(0)])
 
     recebido = models.BooleanField(verbose_name=u"Recebido",
@@ -112,3 +112,34 @@ class Atendimento(models.Model):
     class Meta:
         verbose_name = u"Atendimento"
         verbose_name_plural = u"Atendimentos"
+
+
+class Despesa(models.Model):
+    u"""Representa as despesas semanais"""
+
+    OPCOES_CATEGORIA =((u'Fixa', u'Fixa'),
+                       (u'Compra', u'Compra'))
+
+    data_hora = models.DateTimeField(verbose_name=u"Data",
+                                     help_text=u"Informar data/hora de efetuação da despesa.",
+                                     default=datetime.now)
+
+    categoria = models.CharField(verbose_name=u"Categoria",
+                                 help_text=u"Informa a categoria da despesa.",
+                                 max_length=20,
+                                 choices=OPCOES_CATEGORIA,
+                                 default=OPCOES_CATEGORIA[0][0])
+
+    descricao = models.TextField(verbose_name=u"Descrição",
+                                 help_text=u"Inserir breve descrição sobre a despesa.",
+                                 max_length=500)
+
+
+    valor = models.FloatField(verbose_name=u"Valor",
+                              help_text=u"Indicar o valor (usar 'ponto' como separador decimal) da despesa efetuada.",
+                              validators=[MinValueValidator(0)])
+
+    def __unicode__(self):
+        return u"Despesa %s (%s) - Valor: %.2f" % (self.categoria,
+                                                   self.data_hora.strftime('%d/%m/%Y %H:%M:%S'),
+                                                   self.valor)
