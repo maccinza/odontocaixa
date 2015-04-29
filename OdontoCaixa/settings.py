@@ -107,7 +107,8 @@ MEDIA_URL = '/media/'
 
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
+    'django.core.context_processors.static',
+    'django.core.context_processors.request'
 )
 
 SITE_ID = 1

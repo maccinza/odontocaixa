@@ -1,0 +1,58 @@
+{% extends "admin/index.html" %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{%  static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{%  static 'css/bootstrap-datepicker.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{%  static 'css/bootstrap-datetimepicker.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{%  static 'css/custom.css' %}" />
+{% endblock %}
+{% block bootstrap_admin_js %}{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/transition.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/collapse.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+    <script type="text/javascript">
+        $('#id_data_inicio').datetimepicker({
+            locale: 'pt-BR',
+            format: 'DD/MM/YYYY HH:mm:ss',
+            sideBySide: true,
+            showClose: true
+        });
+        $('#id_data_fim').datetimepicker({
+            locale: 'pt-BR',
+            format: 'DD/MM/YYYY HH:mm:ss',
+            sideBySide: true,
+            showClose: true
+        });
+    </script>
+
+{% endblock %}
+{% block breadcrumbs %}
+        <ol class="breadcrumb">
+          <li class="home">
+            <a href="{% url 'admin:index' %}" title="Início"><span class="glyphicon glyphicon-home"></span></a>
+          </li>
+          <li class="active">Relatório</li>
+        </ol>
+      {% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            <form action="/relatorio/" method="POST" class="form-inline">
+                {% for field in report_form %}
+                    <div class="form-group">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                {% endfor %}
+                <button type="button" class="btn btn-success"> Consultar </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
