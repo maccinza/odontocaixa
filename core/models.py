@@ -4,7 +4,7 @@
 from django.db import models
 from django.core.validators import RegexValidator, MinValueValidator
 
-from datetime import datetime
+from datetime import datetime, date
 
 
 class FormaPagamento(models.Model):
@@ -96,13 +96,15 @@ class Paciente(models.Model):
 class Atendimento(models.Model):
     u"""Representa o atendimento prestado, informando suas características"""
 
-    data = models.DateTimeField(verbose_name=u"Data/hora",
-                                help_text=u"Informe a data/hora em que o atendimento foi prestado.",
-                                default=datetime.now)
+    data = models.DateField(verbose_name=u"Data",
+                            help_text=u"Informe a data em que o atendimento foi prestado.",
+                            default=date.today)
 
-    pacientes = models.ManyToManyField(Paciente,
-                                       verbose_name=u"Pacientes",
-                                       help_text=u"Informar o(s) paciente(s) atendidos.")
+    paciente = models.ForeignKey(Paciente,
+                                 verbose_name=u"Paciente",
+                                 help_text=u"Informar o paciente atendido.",
+                                 null=True,
+                                 blank=True)
 
 
     descricao = models.TextField(verbose_name=u"Descrição",
@@ -130,8 +132,8 @@ class Atendimento(models.Model):
         super(Atendimento, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return u"Atendimento (%s) - %s" % (self.data.strftime('%d/%m/%Y %H:%M:%S'),
-                                           ','.join([u.nome for u in self.pacientes.all()]))
+        return u"Atendimento (%s) - %s" % (self.data.strftime('%d/%m/%Y'),
+                                           None)
 
     class Meta:
         verbose_name = u"Atendimento"
@@ -144,9 +146,9 @@ class Despesa(models.Model):
     OPCOES_CATEGORIA =((u'Fixa', u'Fixa'),
                        (u'Compra', u'Compra'))
 
-    data_hora = models.DateTimeField(verbose_name=u"Data",
-                                     help_text=u"Informar data/hora de efetuação da despesa.",
-                                     default=datetime.now)
+    data = models.DateTimeField(verbose_name=u"Data",
+                                help_text=u"Informar data de efetuação da despesa.",
+                                default=date.today)
 
     categoria = models.CharField(verbose_name=u"Categoria",
                                  help_text=u"Informa a categoria da despesa.",
@@ -172,7 +174,7 @@ class Despesa(models.Model):
 
     def __unicode__(self):
         return u"Despesa %s (%s) - Valor: %.2f" % (self.categoria,
-                                                   self.data_hora.strftime('%d/%m/%Y %H:%M:%S'),
+                                                   self.data.strftime('%d/%m/%Y'),
                                                    self.valor)
 
     class Meta:
@@ -182,16 +184,16 @@ class Despesa(models.Model):
 
 class Pagamento(models.Model):
 
-    data_hora = models.DateTimeField(verbose_name=u"Data",
-                                     help_text=u"Informar data/hora de recebimento do pagamento.",
-                                     default=datetime.now)
+    data = models.DateTimeField(verbose_name=u"Data",
+                                help_text=u"Informar data de recebimento do pagamento.",
+                                default=date.today)
 
     valor = models.FloatField(verbose_name=u"Valor",
                               help_text=u"Indicar o valor (usar 'ponto' como separador decimal) do pagamento recebido.",
                               validators=[MinValueValidator(0)])
 
     def __unicode__(self):
-        return u"Pagamento R$%.2f (%s)" % (self.valor, self.data_hora)
+        return u"Pagamento R$%.2f (%s)" % (self.valor, self.data)
 
     class Meta:
         verbose_name = u"Pagamento"

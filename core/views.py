@@ -5,14 +5,11 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from core.forms import FormRelatorio
 from core.models import Atendimento, Despesa
-from datetime import datetime, timedelta
-import pytz
+from datetime import timedelta, date, datetime
 
 
 @login_required
 def relatorio(request):
-    sp = pytz.timezone("America/Sao_Paulo")
-    utc = pytz.timezone("UTC")
 
     report_form = None
     total_atendimentos = None
@@ -24,8 +21,8 @@ def relatorio(request):
     fim = None
 
     if request.method == 'GET':
-        inicio = (sp.normalize(utc.localize(datetime.utcnow())) - timedelta(days=7)).strftime("%d/%m/%Y %H:%M:%S")
-        fim = (sp.normalize(utc.localize(datetime.utcnow()))).strftime("%d/%m/%Y %H:%M:%S")
+        inicio = (date.today() - timedelta(days=7)).strftime("%d/%m/%Y")
+        fim = (date.today()).strftime("%d/%m/%Y")
 
     elif request.method == 'POST':
         total_atendimentos = 0
@@ -36,10 +33,10 @@ def relatorio(request):
         inicio = request.POST.get('data_inicio')
         fim = request.POST.get('data_fim')
 
-        q_inicio = datetime.strptime(inicio, '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
-        q_fim = datetime.strptime(fim, '%d/%m/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
+        q_inicio = datetime.strptime(inicio, '%d/%m/%Y').strftime('%Y-%m-%d')
+        q_fim = datetime.strptime(fim, '%d/%m/%Y').strftime('%Y-%m-%d')
         atendimentos = Atendimento.objects.filter(data__range=[q_inicio, q_fim])
-        despesas = Despesa.objects.filter(data_hora__range=[q_inicio, q_fim])
+        despesas = Despesa.objects.filter(data__range=[q_inicio, q_fim])
 
 
         for at in atendimentos:
