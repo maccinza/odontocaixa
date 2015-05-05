@@ -119,7 +119,7 @@ class Atendimento(models.Model):
                                         verbose_name=u"Forma de Pagamento",
                                         help_text=u"Indique a forma de pagamento do atendimento.",
                                         null=True,
-                                        blank=True)
+                                        blank=False)
 
 
     def save(self, *args, **kwargs):
