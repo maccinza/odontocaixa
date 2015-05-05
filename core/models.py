@@ -50,7 +50,9 @@ class Paciente(models.Model):
 
     sobrenome = models.CharField(verbose_name=u"Sobrenome",
                                  help_text=u"Informe o(s) sobrenome(s) do paciente.",
-                                 max_length=200)
+                                 max_length=200,
+                                 null=True,
+                                 blank=True)
 
     sexo = models.CharField(verbose_name=u"Sexo",
                             help_text=u"Informe o sexo do paciente.",
@@ -59,7 +61,9 @@ class Paciente(models.Model):
                             default=OPCOES_SEXO[0][0])
 
     idade = models.PositiveIntegerField(verbose_name=u"Idade",
-                                        help_text=u"Informe a idade do paciente.")
+                                        help_text=u"Informe a idade do paciente.",
+                                        null=True,
+                                        blank=True)
 
     email = models.EmailField(verbose_name=u"E-mail",
                               help_text=u"Informe o e-mail do paciente.",
@@ -100,10 +104,6 @@ class Atendimento(models.Model):
                                        verbose_name=u"Pacientes",
                                        help_text=u"Informar o(s) paciente(s) atendidos.")
 
-    duracao = models.PositiveIntegerField(verbose_name=u"Duração",
-                                          help_text=u"Informar duração do atendimento em minutos.",
-                                          null=True,
-                                          blank=True)
 
     descricao = models.TextField(verbose_name=u"Descrição",
                                  help_text=u"Insira uma breve descrição sobre o procedimento/atendimento realizado.",
@@ -121,9 +121,6 @@ class Atendimento(models.Model):
                                         null=True,
                                         blank=True)
 
-    recebido = models.BooleanField(verbose_name=u"Recebido",
-                                   help_text=u"Marcar esta opção caso já tenha recebido o valor da consulta.",
-                                   default=False)
 
     def save(self, *args, **kwargs):
         for field_name in ['descricao']:
@@ -181,3 +178,21 @@ class Despesa(models.Model):
     class Meta:
         verbose_name = u"Despesa"
         verbose_name_plural = u"Despesas"
+
+
+class Pagamento(models.Model):
+
+    data_hora = models.DateTimeField(verbose_name=u"Data",
+                                     help_text=u"Informar data/hora de recebimento do pagamento.",
+                                     default=datetime.now)
+
+    valor = models.FloatField(verbose_name=u"Valor",
+                              help_text=u"Indicar o valor (usar 'ponto' como separador decimal) do pagamento recebido.",
+                              validators=[MinValueValidator(0)])
+
+    def __unicode__(self):
+        return u"Pagamento R$%.2f (%s)" % (self.valor, self.data_hora)
+
+    class Meta:
+        verbose_name = u"Pagamento"
+        verbose_name_plural = u"Pagamentos"

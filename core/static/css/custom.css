@@ -2,3 +2,54 @@
     padding: 3px 15px 0;
     margin: 0 -15px 15px !important;
 }
+
+.extra-text {
+    font-family: 'Helvetica Neue', 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 30px;
+}
+
+.big-text {
+    font-family: 'Helvetica Neue', 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 26px;
+}
+
+.medium-text {
+    font-family: 'Helvetica Neue', 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 22px;
+}
+
+.total-container {
+    padding-top: 5px;
+    padding-left: 6%;
+}
+
+.despesas-container {
+    padding-top: 5px;
+    padding-left: 7%;
+}
+
+.receber-container {
+    padding-top: 5px;
+    padding-left: 8%;
+}
+
+.real-container {
+    padding-top: 5px;
+    padding-left: 9%;
+}
+
+#valor_total {
+    color: #355ea6;
+}
+
+#valor_despesas {
+    color: #ca0000;
+}
+
+#valor_descontado {
+    color: #ca7b08;
+}
+
+#valor_receber {
+    color: #2eab36;
+}

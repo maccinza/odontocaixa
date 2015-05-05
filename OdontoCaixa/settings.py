@@ -112,3 +112,7 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
 )
 
 SITE_ID = 1
+
+global_settings.DATETIME_INPUT_FORMATS += (
+    '%d/%m/%Y %H:%M:%S',
+)
