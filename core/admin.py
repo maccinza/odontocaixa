@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+from django.db import models
 
 
 from core.models import FormaPagamento, Paciente, Atendimento, Despesa, Pagamento
@@ -9,6 +10,9 @@ class AtendimentoAdmin(admin.ModelAdmin):
 
     search_fields = ['pacientes__nome', 'pacientes__sobrenome', 'descricao']
     list_filter = ['data', 'forma_pagamento']
+    formfield_overrides = {
+        models.ForeignKey: {'empty_label': None},
+    }
 
 
 class DespesaAdmin(admin.ModelAdmin):
