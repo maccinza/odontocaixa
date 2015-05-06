@@ -58,41 +58,41 @@
             </form>
         </div>
     </div>
+	{% if valor_receber %}
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4 receber-container alert alert-info custom-info">
-            {% if valor_receber %}
-                <span class="big-text"> A Receber: </span> <span class="extra-text" id="valor_receber"> R${{ valor_receber }} </span>
-            {% endif %}
+			<span class="big-text"> A Receber: </span> <span class="extra-text" id="valor_receber"> R${{ valor_receber }} </span>
         </div>
         <div class="col-md-4"></div>
     </div>
+	{% endif %}
+	{% if valor_atendimentos %}
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4 total-container">
-            {% if valor_atendimentos %}
-                <span class="medium-text"> Total Arrecadado: </span> <span class="big-text" id="valor_total"> R${{ valor_atendimentos }} </span>
-            {% endif %}
+        <div class="col-md-4 total-container">           
+            <span class="medium-text"> Total Arrecadado: </span> <span class="big-text" id="valor_total"> R${{ valor_atendimentos }} </span>            
         </div>
         <div class="col-md-4"></div>
     </div>
+	{% endif %}
+	{% if valor_real %}
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4 real-container">
-            {% if valor_real %}
-                <span class="medium-text"> Total Real: </span> <span class="big-text" id="valor_descontado"> R${{ valor_real }} </span>
-            {% endif %}
+        <div class="col-md-4 real-container">            
+			<span class="medium-text"> Total Real: </span> <span class="big-text" id="valor_descontado"> R${{ valor_real }} </span>            
         </div>
         <div class="col-md-4"></div>
     </div>
+	{% endif %}
+	{% if valor_despesas %}
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4 despesas-container">
-            {% if valor_despesas %}
-                <span class="medium-text"> Total Despesas: </span> <span class="big-text" id="valor_despesas"> R${{ valor_despesas }} </span>
-            {% endif %}
+        <div class="col-md-4 despesas-container">            
+            <span class="medium-text"> Total Despesas: </span> <span class="big-text" id="valor_despesas"> R${{ valor_despesas }} </span>            
         </div>
         <div class="col-md-4"></div>
     </div>
+	{% endif %}
 
 {% endblock %}
