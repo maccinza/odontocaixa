@@ -144,9 +144,9 @@ class Despesa(models.Model):
     OPCOES_CATEGORIA =((u'Fixa', u'Fixa'),
                        (u'Compra', u'Compra'))
 
-    data = models.DateTimeField(verbose_name=u"Data",
-                                help_text=u"Informar data de efetuação da despesa.",
-                                default=date.today)
+    data = models.DateField(verbose_name=u"Data",
+                            help_text=u"Informar data de efetuação da despesa.",
+                            default=date.today)
 
     categoria = models.CharField(verbose_name=u"Categoria",
                                  help_text=u"Informa a categoria da despesa.",
