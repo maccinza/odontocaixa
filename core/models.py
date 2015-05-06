@@ -102,9 +102,7 @@ class Atendimento(models.Model):
 
     paciente = models.ForeignKey(Paciente,
                                  verbose_name=u"Paciente",
-                                 help_text=u"Informar o paciente atendido.",
-                                 null=True,
-                                 blank=True)
+                                 help_text=u"Informar o paciente atendido.")
 
 
     descricao = models.TextField(verbose_name=u"Descrição",
@@ -133,7 +131,7 @@ class Atendimento(models.Model):
 
     def __unicode__(self):
         return u"Atendimento (%s) - %s" % (self.data.strftime('%d/%m/%Y'),
-                                           None)
+                                           self.paciente.nome)
 
     class Meta:
         verbose_name = u"Atendimento"
