@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from core.forms import FormRelatorio
-from core.models import Atendimento, Despesa
+from core.models import Atendimento, Despesa, Pagamento
 from datetime import timedelta, date, datetime
 
 
@@ -46,7 +46,11 @@ def relatorio(request):
         for dp in despesas:
             total_despesas += dp.valor
 
-        a_receber = float(total_real - total_despesas)/float(2)
+        recebidos = Pagamento.objects.filter(data__range=[q_inicio, q_fim])
+        for r in recebidos:
+            recebido += r.valor
+
+        a_receber = (float(total_real - total_despesas)/float(2)) - recebido
 
     report_form = FormRelatorio(initial={'data_inicio': inicio,
                                          'data_fim': fim},)

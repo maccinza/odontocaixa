@@ -21,11 +21,13 @@
 .total-container {
     padding-top: 5px;
     padding-left: 6%;
+    background-color: #D7E1FC;
 }
 
 .despesas-container {
     padding-top: 5px;
     padding-left: 7%;
+    background-color: #D7E1FC;
 }
 
 .receber-container {
@@ -36,6 +38,7 @@
 .real-container {
     padding-top: 5px;
     padding-left: 9%;
+    background-color: #D7E1FC;
 }
 
 #valor_total {
@@ -52,4 +55,13 @@
 
 #valor_receber {
     color: #2eab36;
+}
+
+.custom-info {
+    background-color: #f3f3f3 !important;
+    border-color: #ffffff !important;
+}
+
+.alert {
+    margin-top: 5% !important;
 }
